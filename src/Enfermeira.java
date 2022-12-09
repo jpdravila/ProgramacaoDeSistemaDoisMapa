@@ -1,6 +1,6 @@
-public class enfermeira extends Pessoa{
+public class Enfermeira extends Pessoa{
 
-    public enfermeira() {
+    public Enfermeira() {
     }
     public void exibirDados(){
         System.out.println("Nome: "+getNome());

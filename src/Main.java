@@ -7,43 +7,43 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     
     public static void main(String[] args) throws ParseException {
-        Scanner scannerValor = new Scanner(System.in);
-        Scanner scannerTexto = new Scanner(System.in);
-        Scanner scannerCpf = new Scanner(System.in);
-        int op = 0;
+        var scannerValor = new Scanner(System.in);
+        var scannerTexto = new Scanner(System.in);
+        var scannerCpf = new Scanner(System.in);
+        int jumper = 0;
         
-        enfermeira enf = new enfermeira();
+        var penf = new Enfermeira();
         
-        System.out.println("CPF da Enfermeira que está aplicando Vacina: ");
-        enf.setCpf(scannerCpf.next());
+        System.out.print("CPF da Enfermeira que está aplicando Vacina: ");
+        penf.setCpf(scannerCpf.next());
         
-        System.out.println("Nome da Enfermeira que está aplicando Vacina: ");
-        enf.setNome(scannerTexto.next());
+        System.out.print("Nome da Enfermeira que está aplicando Vacina: ");
+        penf.setNome(scannerTexto.next());
         
-        System.out.println(enf.getNome()+ " Seja Bem vindo(a) ao sistema de Vacinação\n");
+        System.out.printf("%s, Seja Bem vindo(a) ao sistema de Vacinação\n", penf.getNome().toUpperCase());
         
         
-        ArrayList<Cidadao> listaCidadao = new ArrayList();
+        ArrayList<Cidadao> arquivarCidadao = new ArrayList();
         
         do{
-           menu();
-           op = scannerValor.nextInt();
+           tabela();
+            jumper = scannerValor.nextInt();
            
-           switch(op){
+           switch(jumper){
                case 1:
-                   Cidadao cidadao = new Cidadao();
-                   SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy"); 
+                   var cidadao = new Cidadao();
+                   var sdf1= new SimpleDateFormat("dd/MM/yyyy");
                    
-                   System.out.println("Informe o CPF do cidadão: ");
+                   System.out.print("Digite o CPF do cidadão: ");
                    cidadao.setCpf(scannerCpf.next());
-                   System.out.println("Informe o Nome do cidadão: ");
-                   cidadao.setNome(scannerTexto.next());
+                   System.out.print("Digite o Nome do cidadão: ");
+                   cidadao.setNome(scannerTexto.next().toUpperCase());
                    
-                   System.out.println("Informe a data da 1ª dose(dia/Mês/ano): ");
+                   System.out.print("Digite a data da 1ª dose(dia/Mês/ano): ");
                    cidadao.setDtPrimeiraDose(scannerTexto.next());
                    Date dataDose1 = sdf1.parse(cidadao.getDtPrimeiraDose());
                    
-                   System.out.println("Informe a data da 2ª dose(dia/Mês/ano): ");
+                   System.out.print("Digite a data da 2ª dose(dia/Mês/ano): ");
                    cidadao.setDtSegundaDose(scannerTexto.next());
                    Date dataDose2 = sdf1.parse(cidadao.getDtSegundaDose());
                    
@@ -52,7 +52,7 @@ public class Main {
                    if(dias < 120){
                        System.out.println("Segunda Dose deve ser Aplicada 4 meses após a primeira");
                    }else{
-                       System.out.println("Informe a data da 3ª dose(dia/Mês/ano): ");
+                       System.out.print("Digite a data da 3ª dose(dia/Mês/ano): ");
                        cidadao.setDtTerceiraDose(scannerTexto.next());
                        Date dataDose3 = sdf1.parse(cidadao.getDtTerceiraDose());
                        
@@ -62,24 +62,24 @@ public class Main {
                        if(dias < 120){
                            System.out.println("Terceira Dose deve ser Aplicada 4 meses após a primeira");                           
                        }else{
-                           System.out.println("Informe a data da 4ª dose(dia/Mês/ano): ");
+                           System.out.print("Digite a data da 4ª dose(dia/Mês/ano): ");
                            cidadao.setDtQuartaDose(scannerTexto.next());
                            Date dataDose4 = sdf1.parse(cidadao.getDtQuartaDose());
                            data = Math.abs(dataDose2.getTime() - dataDose3.getTime()) ; 
                            dias = TimeUnit.DAYS.convert(data, TimeUnit.MILLISECONDS);
                            
                            if(dias < 120){
-                              System.out.println("Terceira Dose deve ser Aplicada 4 meses após a primeira");                           
+                              System.out.print("Terceira Dose deve ser Aplicada 4 meses após a primeira");
                            }else{
-                               listaCidadao.add(cidadao);
+                               arquivarCidadao.add(cidadao);
                            }
                        }
                    }                   
                break;
                case 2:
-                   if(listaCidadao.size() > 0){
-                       for (int i = 0; i < listaCidadao.size(); i++) {
-                           listaCidadao.get(i).imprimirDados();
+                   if(arquivarCidadao.size() > 0){
+                       for (int i = 0; i < arquivarCidadao.size(); i++) {
+                           arquivarCidadao.get(i).imprimirDados();
                        }
                    }else{
                        System.out.println("Não existe dados Cadastrados");
@@ -90,17 +90,24 @@ public class Main {
                
                break;
                default:
-                   System.out.println("Opção Inválida");
+                   System.out.println("Sair");
                break;
            }
             
-        }while(op != 0);
+        }while(jumper != 0);
         
     }
-    public static void menu(){
-        System.out.println("------------------------------");
-        System.out.println("1- vacinar cidadão\n2-listar cidadãos vacinados\n0-sair");
-        System.out.println("------------------------------");
+    public static void tabela(){
+
+        System.out.println
+                ("""
+                -=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=
+                1 - Cadastrar/vacinar cidadão;
+                2 - Listar cidadãos vacinados
+                3 - Sair
+                -=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=
+                """);
+
     }
     
 }
